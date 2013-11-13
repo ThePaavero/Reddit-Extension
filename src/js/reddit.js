@@ -18,7 +18,11 @@ var Reddit = function() {
 	 */
 	this.init = function()
 	{
+		// For thread listings
 		tick();
+
+		// For threads
+		doMatchUsers();
 	};
 
 	/**
@@ -241,6 +245,40 @@ var Reddit = function() {
 		{
 			return false;
 		}
+	};
+
+	/**
+	 * Flash other posts by same user on username hover
+	 * @return void
+	 */
+	var doMatchUsers = function()
+	{
+		// Gather up our users
+		var usernames = $('a.author ');
+
+		// Attach hover listener
+		usernames.on('mouseenter', function()
+		{
+			// Do on hover
+			var username = $(this).html();
+			var me = $(this);
+
+			// Get other items by this user
+			usernames.each(function()
+			{
+				if($(this).html() === username && $(this) != me)
+				{
+					// This one's a match
+					var apply_to = $(this).parents('.noncollapsed');
+					apply_to.addClass('matching_user');
+					setTimeout(function()
+					{
+						apply_to.removeClass('matching_user');
+					}, 350);
+				}
+			});
+		});
+
 	};
 
 };

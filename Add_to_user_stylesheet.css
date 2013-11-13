@@ -162,6 +162,10 @@ span.rank {
 		margin-right: 10px;
 	}
 
+.matching_user {
+	background: #c1f173;
+}
+
 /**
  * Reddit ends
  */
