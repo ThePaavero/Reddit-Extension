@@ -298,12 +298,12 @@ var Reddit = function() {
 	{
 		links.each(function()
 		{
-			if($(this).data('processed_down'))
+			if($(this).data('processed_autovote'))
 			{
 				return true; // Continue
 			}
 
-			$(this).data('processed_down', true);
+			$(this).data('processed_autovote', true);
 
 			var title = $(this).html().toLowerCase();
 
