@@ -46,15 +46,25 @@ var Reddit = function() {
 		removeElementsWithWhatsThis();
 		styleTitleByRankValue();
 		doYouTubeHovers();
-		autoVote({
-				'finland' : 'up',
-				'finnish' : 'up',
-				'helsinki': 'up',
 
-				'scarlett': 'down',
-				'lively'  : 'down',
-				'swift'   : 'down'
+		autoVote({
+				'finland'   : 'up',
+				'finnish'   : 'up',
+				'helsinki'  : 'up',
+
+				'scarlett'  : 'down',
+				'lively'    : 'down',
+				'swift'     : 'down',
+				'my cakeday': 'down'
 			});
+
+		hideTitlesWith([
+				'scarlett',
+				'my cakeday',
+				'daily vape',
+				'vapor chef',
+				'free friday'
+			]);
 
 		console.log('Ticked!');
 
@@ -316,6 +326,37 @@ var Reddit = function() {
 					var vote_link = $(this).parents('.thing ').find('.arrow.' + type);
 					vote_link.click();
 					console.log(type + 'voted due to trigger "' + trigger + '"');
+				}
+			}
+		});
+	};
+
+	/**
+	 * Hide things with trigger in title
+	 * @param  {array} triggers Array with strings
+	 * @return void
+	 */
+	var hideTitlesWith = function(triggers)
+	{
+		links.each(function()
+		{
+			if($(this).data('processed_hide'))
+			{
+				return true; // Continue
+			}
+
+			$(this).data('processed_hide', true);
+
+			var title = $(this).html().toLowerCase();
+
+			for(var i in triggers)
+			{
+				var trigger = triggers[i];
+				if(title.indexOf(trigger) > -1)
+				{
+					var section = $(this).parents('.thing ');
+					section.hide();
+					console.log('Hid title due to trigger "' + trigger + '"');
 				}
 			}
 		});
