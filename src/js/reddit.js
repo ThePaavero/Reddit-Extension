@@ -47,6 +47,7 @@ var Reddit = function() {
 		styleTitleByRankValue();
 		doYouTubeHovers();
 		autoVote({
+				'finland' : 'up',
 				'finnish' : 'up',
 				'helsinki': 'up',
 
