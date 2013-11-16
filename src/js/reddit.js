@@ -46,6 +46,14 @@ var Reddit = function() {
 		removeElementsWithWhatsThis();
 		styleTitleByRankValue();
 		doYouTubeHovers();
+		autoVote({
+				'finnish' : 'up',
+				'helsinki': 'up',
+
+				'scarlett': 'down',
+				'lively'  : 'down',
+				'swift'   : 'down'
+			});
 
 		console.log('Ticked!');
 
@@ -278,7 +286,38 @@ var Reddit = function() {
 				}
 			});
 		});
+	};
 
+	/**
+	 * Automatically click voting arrows
+	 * @param  {object} triggers Trigger as key and "up" or "down" as value
+	 * @return void
+	 */
+	var autoVote = function(triggers)
+	{
+		links.each(function()
+		{
+			if($(this).data('processed_down'))
+			{
+				return true; // Continue
+			}
+
+			$(this).data('processed_down', true);
+
+			var title = $(this).html().toLowerCase();
+
+			for(var i in triggers)
+			{
+				var trigger = i;
+				if(title.indexOf(trigger) > -1)
+				{
+					var type = triggers[i] === 'down' ? 'down' : 'up';
+					var vote_link = $(this).parents('.thing ').find('.arrow.' + type);
+					vote_link.click();
+					console.log(type + 'voted due to trigger "' + trigger + '"');
+				}
+			}
+		});
 	};
 
 };
